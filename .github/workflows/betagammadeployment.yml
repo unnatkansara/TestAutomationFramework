@@ -1,0 +1,47 @@
+name: Deploy to Beta and Gamma
+
+# Trigger the workflow manually.
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-beta:
+    name: Deploy to Beta
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out the code from the repository.
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Simulate deployment to Beta.
+      - name: Deploy to Beta
+        run: |
+          echo "Deploying to Beta environment..."
+          # Add your deployment commands here.
+          echo "Deployment to Beta complete."
+
+    # Set the environment to Beta.
+    environment:
+      name: beta
+
+  deploy-to-gamma:
+    name: Deploy to Gamma
+    runs-on: ubuntu-latest
+    needs: deploy-to-beta  # Ensures this job runs only after Beta deployment is complete.
+    steps:
+      # Step 1: Check out the code from the repository.
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Simulate deployment to Gamma.
+      - name: Deploy to Gamma
+        run: |
+          echo "Deploying to Gamma environment..."
+          # Add your deployment commands here.
+          echo "Deployment to Gamma complete."
+
+    # Set the environment to Gamma.
+    environment:
+      name: gamma
+      # Require manual approval before deploying to Gamma.
+      url: https://your-environment-url.example.com/gamma
